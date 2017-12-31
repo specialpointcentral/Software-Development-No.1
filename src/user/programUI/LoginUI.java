@@ -80,8 +80,7 @@ public class LoginUI extends JFrame {
 					new ReadUI();
 					while (true) {
 						if (Data.Groupready) {
-							new MainUIPanel();
-							//new MainUI();// 打开MainUI
+							new MainUI();// 打开MainUI
 							break;
 						}
 						//System.out.println(Data.Groupready);

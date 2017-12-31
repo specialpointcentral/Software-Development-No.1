@@ -27,6 +27,12 @@ public class ModifyInfoUI extends JFrame {
 	private JComboBox cb_state;
 
 	public ModifyInfoUI() {
+		// try {
+		// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("\u4FE1\u606F\u4FEE\u6539-\u5FD7\u613F\u8005\u7BA1\u7406\u7CFB\u7EDF");
 		setResizable(false);

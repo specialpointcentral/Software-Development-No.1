@@ -1,5 +1,6 @@
 package user.programUI;
 
+import javax.swing.JFrame;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -7,15 +8,22 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import data.*;
 import user.data.Data;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.JTextArea;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Iterator;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VolManageUI extends JPanel {
+public class VolManageUI extends JFrame {
 	/**
 	 * 
 	 */
@@ -26,15 +34,28 @@ public class VolManageUI extends JPanel {
 	private JButton btn_delete;
 
 	public VolManageUI() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setTitle("\u5FD7\u613F\u8005\u7BA1\u7406-\u5FD7\u613F\u8005\u7BA1\u7406\u7CFB\u7EDF");
+		setResizable(false);
 		
-		 setLayout(null);
-		 setBounds(100, 100, 565, 498);
+		JPanel jp=new JPanel();
+		jp.setLayout(null);
+		jp.setBounds(100, 100, 565, 521);
 		
-		setLayout(null);
+		setBounds(100, 100, 565, 521);
+		getContentPane().add(jp);
+
+		JLabel txt_groupName = new JLabel("{name}");
+		txt_groupName.setBounds(14, 13, 72, 18);
+		jp.add(txt_groupName);
+
+		JLabel txt_groupCode = new JLabel("{code}");
+		txt_groupCode.setBounds(14, 42, 72, 18);
+		jp.add(txt_groupCode);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(14, 13, 212, 460);
-		 add(scrollPane);
+		scrollPane.setBounds(14, 73, 212, 400);
+		jp.add(scrollPane);
 
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode(Data.group);// 根节点加入
 
@@ -81,7 +102,7 @@ public class VolManageUI extends JPanel {
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(238, 13, 308, 420);
-		 add(scrollPane_1);
+		jp.add(scrollPane_1);
 
 		txt_info = new JTextArea();
 		txt_info.setEditable(false);
@@ -118,9 +139,9 @@ public class VolManageUI extends JPanel {
 			}
 		});
 		btn_delete.setBounds(432, 446, 113, 27);
-		 add(btn_delete);
+		jp.add(btn_delete);
 
-		btn_modify = new JButton("\u66F4\u6539\u4E2A\u4EBA\u4FE1\u606F");
+		btn_modify = new JButton("\u66F4\u6539");
 		btn_modify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// modify
@@ -129,15 +150,25 @@ public class VolManageUI extends JPanel {
 
 			}
 		});
-		btn_modify.setBounds(240, 446, 131, 27);
-		 add(btn_modify);
+		btn_modify.setBounds(240, 446, 113, 27);
+		jp.add(btn_modify);
+
+		txt_groupName.setText(Data.groupName);
+		txt_groupCode.setText(String.valueOf(Data.groupID));
 		
 		//first disable btn
 		btn_delete.setEnabled(false);
 		btn_modify.setEnabled(false);
 
 		tree_vol.expandRow(0);// 首个展开
-		
+		setVisible(true);
+
+		addWindowListener(new WindowAdapter() {// when closing
+			public void windowClosing(WindowEvent e) {
+				new MainUI();
+			}
+
+		});
 	}
 
 	private void showGroupInfo(Group group, JTextArea infoArea) {
