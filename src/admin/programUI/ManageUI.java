@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.util.Iterator;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -23,8 +24,10 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.Color;
+import java.awt.Graphics;
 
-public class ManageUI extends JFrame {
+public class ManageUI extends JPanel {
 	/**
 	 * 
 	 */
@@ -32,22 +35,15 @@ public class ManageUI extends JFrame {
 	private DefaultListModel<Groups> list1;
 	private DefaultListModel<Volenteer> list2;
 	private JTextArea txt_volSimpleInfo;
+	private JButton btn_infoDetail;
 
 	public ManageUI() {
-		// try {
-		// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		setTitle("\u4FE1\u606F\u7BA1\u7406-\u5FD7\u613F\u8005\u7BA1\u7406\u7CFB\u7EDF");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 516, 429);
-		getContentPane().setLayout(null);
+		setBounds(100, 100, 720, 515);
+		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(14, 13, 222, 356);
-		getContentPane().add(panel);
+		add(panel);
 		panel.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -71,6 +67,7 @@ public class ManageUI extends JFrame {
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
 				// TODO Auto-generated method stub
+				btn_infoDetail.setEnabled(true);
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 				if (node == null)
 					return;
@@ -126,8 +123,8 @@ public class ManageUI extends JFrame {
 		new ShowGroupTree(top, tree);// 建树
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(239, 13, 261, 356);
-		getContentPane().add(panel_1);
+		panel_1.setBounds(239, 13, 283, 356);
+		add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_2 = new JPanel();
@@ -143,8 +140,8 @@ public class ManageUI extends JFrame {
 					Object nodeInfo = node.getUserObject();
 					if (nodeInfo instanceof Volenteer) {
 						// 叶节点,vol
-						new IndividuActionChangeUI((Group)((DefaultMutableTreeNode)node.getParent()).getUserObject(), 
-								(Volenteer)nodeInfo, false);
+						new IndividuActionChangeUI((Group) ((DefaultMutableTreeNode) node.getParent()).getUserObject(),
+								(Volenteer) nodeInfo, false);
 
 					} else
 						JOptionPane.showMessageDialog(null, "不允许修改此结点！", "警告", JOptionPane.WARNING_MESSAGE);
@@ -153,9 +150,43 @@ public class ManageUI extends JFrame {
 		});
 		panel_2.add(btn_infoModify);
 
-		JButton btn_infoDetail = new JButton("\u8BE6\u7EC6\u4FE1\u606F");
+		btn_infoDetail = new JButton("\u8BE6\u7EC6\u4FE1\u606F");
 		btn_infoDetail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+				btn_infoDetail.setEnabled(false);
+				if (node == null)
+					return;
+				else {
+					Object nodeInfo = node.getUserObject();
+					if (nodeInfo instanceof Volenteer) {
+						// 叶节点,vol
+						// 文档部分更新
+						txt_volSimpleInfo.append("\n以下是详细信息：\n");
+						Activity act = null;
+						int num = 0;
+						for (Iterator<Activity> it = ((Volenteer) nodeInfo).activities.iterator(); it.hasNext();) {
+							act = it.next();
+							if (!act.checked) {// 未被审核的显示
+								txt_volSimpleInfo.append("----------" + (++num) + "----------" + "\n");
+								txt_volSimpleInfo.append("活动名称 " + act.name + "\n");
+								txt_volSimpleInfo.append("项目未被审核" + "\n");
+								txt_volSimpleInfo.append("志愿时长：" + act.hour + "\n");
+								txt_volSimpleInfo.append("活动日期：" + act.getYear() + "年" + act.getMonth() + "月"
+										+ act.getDay() + "日" + "\n");
+								txt_volSimpleInfo.append("负责组织：" + act.group.name + "\n");
+							} else {
+								txt_volSimpleInfo.append("----------" + (++num) + "----------" + "\n");
+								txt_volSimpleInfo.append("活动名称 " + act.name + "\n");
+								txt_volSimpleInfo.append("志愿时长：" + act.hour + "\n");
+								txt_volSimpleInfo.append("活动日期：" + act.getYear() + "年" + act.getMonth() + "月"
+										+ act.getDay() + "日" + "\n");
+								txt_volSimpleInfo.append("负责组织：" + act.group.name + "\n");
+							}
+						}
+					}
+				}
+
 			}
 		});
 		panel_2.add(btn_infoDetail);
@@ -167,16 +198,14 @@ public class ManageUI extends JFrame {
 		txt_volSimpleInfo.setEditable(false);
 		scrollPane_1.setViewportView(txt_volSimpleInfo);
 
-		setResizable(false);// 不可放大
-		setVisible(true);
-
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				new MainUI();
-				dispose();
+		JPanel panel_3 = new JPanel() {
+			public void paint(Graphics g) {
+				g.drawImage(new ImageIcon("1.jpg").getImage(), 0, 0, this);
 			}
+		};
+		panel_3.setBounds(536, 13, 170, 489);
+		add(panel_3);
 
-		});
 	}
 }
 

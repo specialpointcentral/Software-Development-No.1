@@ -28,6 +28,10 @@ public class Data {
 	//Need Save or Save is OK?
 	public static boolean saveGroup;
 	public static boolean saveUser;
+	public static boolean saveGroups;
+	
+	public static User user;//user login
+	
 
 	public Data() {
 		// TODO Auto-generated constructor stub
@@ -41,6 +45,7 @@ public class Data {
 		Groupready = false;
 		saveGroup=false;
 		saveUser=false;
+		saveGroups=false;
 	}
 
 	/**
@@ -88,7 +93,7 @@ public class Data {
 			Data.group=new Group();
 			Data.group.ID=Data.groupID;
 			Data.group.name=Data.groupName;
-			writeFile(file);
+			writeGroup(file);
 			Groupready=true;
 			JOptionPane.showMessageDialog(null, "似乎没有找到志愿者信息文件","ERROR",JOptionPane.ERROR_MESSAGE);
 
@@ -105,10 +110,27 @@ public class Data {
 	 * @param file
 	 *            文件目录
 	 */
-	public static void writeFile(String file) {
+	public static void writeGroup(String file) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(group);//存入志愿者等等信息
+
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 将信息写入文件，所有的信息将会一次性写入
+	 * 
+	 * @param file
+	 *            文件目录
+	 */
+	public static void writeUser(String file) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(groups);//存入组织等等信息
 
 			out.close();
 		} catch (Exception e) {

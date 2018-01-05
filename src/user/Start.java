@@ -50,7 +50,6 @@ public class Start {
 			Thread.sleep(100);
 			if(Data.Userready) {
 				new LoginUI();
-				new MainUIPanel();
 				break;
 			}
 			

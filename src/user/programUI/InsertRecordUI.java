@@ -8,17 +8,14 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import data.*;
 import user.data.Data;
+import user.process.WriteData;
 
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
-public class InsertRecordUI extends JFrame {
+public class InsertRecordUI extends JPanel {
 	/**
 	 * 
 	 */
@@ -30,8 +27,6 @@ public class InsertRecordUI extends JFrame {
 	private JTextField txt_year;
 	private JTextField txt_month;
 	private JTextField txt_day;
-	private JLabel lblgroupname;
-	private JLabel lblgroupid;
 	private DefaultMutableTreeNode top;
 	private JComboBox box_sex;
 	private JTree tree;
@@ -39,28 +34,12 @@ public class InsertRecordUI extends JFrame {
 	private JButton btn_delete;
 
 	public InsertRecordUI() {
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("\u65F6\u957F\u5F55\u5165-\u5FD7\u613F\u8005\u7BA1\u7406\u7CFB\u7EDF");
-		setResizable(false);
-		JPanel jp=new JPanel();
-		jp.setLayout(null);
-		jp.setBounds(100, 100, 571, 521);
-		
-		setBounds(100, 100, 571, 521);
-		
-		getContentPane().add(jp);
-
-		JLabel txt_groupName = new JLabel("{groupName}");
-		txt_groupName.setBounds(14, 13, 195, 18);
-		jp.add(txt_groupName);
-
-		JLabel txt_groupCode = new JLabel("{groupID}");
-		txt_groupCode.setBounds(14, 44, 72, 18);
-		jp.add(txt_groupCode);
+		setLayout(null);
+		setBounds(0, 0, 575, 480);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(24, 75, 233, 390);
-		jp.add(scrollPane);
+		scrollPane.setBounds(24, 13, 233, 452);
+		add(scrollPane);
 
 		top = new DefaultMutableTreeNode(Data.groupName);
 		top.setUserObject(Data.group);
@@ -133,25 +112,47 @@ public class InsertRecordUI extends JFrame {
 		});
 
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "\u64CD\u4F5C", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
-		panel.setBounds(271, 337, 276, 67);
-		jp.add(panel);
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\u64CD\u4F5C", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBounds(271, 306, 276, 67);
+		add(panel);
 		panel.setLayout(null);
 
 		JButton btn_createTable = new JButton("\u751F\u6210\u5199\u5B9E\u8868");
+		btn_createTable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new DateSelectUI();
+				
+			}
+		});
 		btn_createTable.setBounds(14, 25, 110, 27);
 		panel.add(btn_createTable);
 
-		JButton btn_createData = new JButton("\u751F\u6210\u6570\u636E");
+		JButton btn_createData = new JButton("\u6570\u636E\u4E0A\u4F20");
+		btn_createData.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btn_createData.setText("请等待...");
+				new WriteData(Data.groupID,1);
+				while(!Data.saveGroup) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO 自动生成的 catch 块
+						e.printStackTrace();
+					}
+				}
+				Data.saveGroup=false;
+				JOptionPane.showMessageDialog(null, "成功上传！");
+				btn_createData.setText("\u6570\u636E\u4E0A\u4F20");
+			}
+		});
 		btn_createData.setBounds(152, 25, 110, 27);
 		panel.add(btn_createData);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "\u63D2\u5165/\u66F4\u6539", TitledBorder.LEADING, TitledBorder.TOP,
 				null, null));
-		panel_2.setBounds(271, 44, 276, 280);
-		jp.add(panel_2);
+		panel_2.setBounds(271, 13, 276, 280);
+		add(panel_2);
 		panel_2.setLayout(null);
 
 		JLabel label = new JLabel("\u59D3\u540D");
@@ -368,18 +369,8 @@ public class InsertRecordUI extends JFrame {
 				}
 			}
 		});
-		txt_groupName.setText(Data.groupName);
-		txt_groupCode.setText(String.valueOf(Data.groupID));
 		tree.expandRow(0);// 首个展开
-		setVisible(true);
 
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				new MainUI();
-				dispose();
-			}
-
-		});
 	}
 
 	/**

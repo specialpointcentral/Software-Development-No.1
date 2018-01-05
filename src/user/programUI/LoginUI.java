@@ -80,7 +80,8 @@ public class LoginUI extends JFrame {
 					new ReadUI();
 					while (true) {
 						if (Data.Groupready) {
-							new MainUI();// 打开MainUI
+							new MainUIPanel();
+							//new MainUI();// 打开MainUI
 							break;
 						}
 						//System.out.println(Data.Groupready);
@@ -141,6 +142,7 @@ public class LoginUI extends JFrame {
 				user=it.next();
 				if(user.getUser().equals(userName)&&user.getPassword().equals(password)) {
 					//确认正确，变量存入
+					Data.user=user;
 					Data.groupName=groupName;
 					Data.groupID=group.ID;
 					Data.loginUser=userName;

@@ -27,7 +27,15 @@ public class ReadData {
 	 * 
 	 */
 	public static void readGroups() {
-		new ReadGroups();
+		ReadGroups th=new ReadGroups();
+		while(th.isAlive()) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
@@ -38,6 +46,11 @@ class ReadUser extends Thread {
 	}
 
 	public void run() {
+		try {
+			new NetFileWork("config.dat", 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Data.getUser("config.dat");
 	}
 

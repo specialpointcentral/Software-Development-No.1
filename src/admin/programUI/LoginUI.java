@@ -17,7 +17,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import admin.data.Data;
 import data.User;
+import admin.programUI.MainUIPanel;
 import admin.process.ReadData;
+import java.awt.Dialog.ModalExclusionType;
+import java.awt.Window.Type;
 
 public class LoginUI extends JFrame implements ActionListener {
 	/**
@@ -32,15 +35,8 @@ public class LoginUI extends JFrame implements ActionListener {
 
 	public LoginUI() {
 		super("登录系统");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		try {
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
 		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jp1 = new JPanel();// 用于存放标题
 		jp1.add(new JLabel("欢迎登陆管理系统"));
 		jp2 = new JPanel();// 用于存放登录提示
@@ -96,8 +92,8 @@ public class LoginUI extends JFrame implements ActionListener {
 				if(loginUser.getUser().equals(users)&&loginUser.getPassword().equals(passwords)) {
 					//correct!
 					Data.user=loginUser.getUser();
-					new MainUI();
 					ReadData.readGroups();
+					new MainUIPanel();
 					dispose();
 				}
 			}

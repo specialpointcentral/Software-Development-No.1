@@ -15,7 +15,13 @@ public class SaveUI extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JProgressBar progressBar;
-	public SaveUI() {
+	
+	/**
+	 * 
+	 * @param statue 1-save and exit 2-save not exit
+	 * 
+	 */
+	public SaveUI(int statue) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 440, 127);
 		setResizable(false);
@@ -32,19 +38,25 @@ public class SaveUI extends JFrame {
 		getContentPane().add(label);
 
 		setVisible(true);
-		new Saving(progressBar);		
+		new Saving(progressBar, statue,this);
+			
 	}
 	
 }
 
 class Saving extends Thread{
-	JProgressBar progressBar;
-	public Saving(JProgressBar progressBar) {
+	private JProgressBar progressBar;
+	private int statue;//1-save and exit else-save not exit
+	private JFrame jf;
+	public Saving(JProgressBar progressBar,int statue,JFrame jf) {
 		this.progressBar=progressBar;
+		this.statue=statue;
+		this.jf=jf;
 		this.start();
 	}
 	public void run() {
-		new WriteData(Data.groupID);
+		new WriteData(Data.groupID,1);
+		new WriteData(Data.groupID,2);//save group
 		new ProgressBar(progressBar);
 		while (true) {
 			try {
@@ -53,7 +65,7 @@ class Saving extends Thread{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			if (Data.saveGroup) {// 完成写入
+			if (Data.saveGroup&&Data.saveGroups) {// 完成写入
 				progressBar.setValue(progressBar.getMaximum());
 				try {
 					Thread.sleep(10);
@@ -66,7 +78,8 @@ class Saving extends Thread{
 		}
 
 		// Saving is OK
-		 System.exit(0);//结束所有
+		if(statue==1) System.exit(0);
+		else jf.dispose();
 	}
 }
 

@@ -7,11 +7,9 @@ import admin.data.Data;
 import data.*;
 
 public class WriteData {
-	boolean groupOK = false;
-	boolean configOK = false;
 
 	public WriteData(int tag, Object obj) {
-		// tag 1:ArryList<Group> 2:ArryList<Groups>
+		// tag 1:ArryList<Group> 2:ArryList<Groups> 3:
 		switch (tag) {
 		case 1:
 			ArrayList<Group> group = (ArrayList<Group>) obj;
@@ -20,6 +18,10 @@ public class WriteData {
 		case 2:
 			ArrayList<Groups> groups = (ArrayList<Groups>) obj;
 			new WriteGroups(groups);
+			break;
+		case 3:
+			ArrayList<User> users = (ArrayList<User>) obj;
+			new WriteUser(users);
 			break;
 		}
 
@@ -80,6 +82,12 @@ class WriteUser extends Thread {
 
 	public void run() {
 		// maybe config.data can save more infomation
+		try {
+			new NetFileWork("config.dat", 2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Data.writeFile("config.dat", users);
+		Data.UsersSaveOK=true;
 	}
 }

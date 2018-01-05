@@ -15,13 +15,7 @@ public class Start {
 		
 		//read config data
 		ReadData.readUser();
-		
-		//Test-----------------
-		User user=new User();
-		user.setUser("admin");
-		user.setPsw("admin");
-		Data.loginUser.add(user);
-		//--------------------
+	
 		new LoginUI();
 
 

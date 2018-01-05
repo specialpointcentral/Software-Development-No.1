@@ -34,6 +34,7 @@ public class Data {
 	//save?
 	public static boolean GroupSaveOK;
 	public static boolean GroupsSaveOK;
+	public static boolean UsersSaveOK;
 	
 	public Data() {
 		loginUser=new ArrayList<User>();
@@ -46,6 +47,7 @@ public class Data {
 		GroupSaveOK=false;
 		GroupsSaveOK=false;
 		recentReadReady=false;
+		UsersSaveOK=false;
 	}
 	/**
 	 * 将文件配置读入，得到User
@@ -61,11 +63,19 @@ public class Data {
 			input.close();
 			Userready = true;
 
-		} catch (Exception e) {
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "没有用户配置信息，已重新生成！\n用户名：admin\n密码：admin\n登陆后请及时修改密码！","提示",JOptionPane.WARNING_MESSAGE);
+			User user=new User();
+			user.setUser("admin");
+			user.setPsw("admin");
+			Data.loginUser.add(user);
+		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			System.err.print("Read setting file ERROR!");
 			JOptionPane.showMessageDialog(null, "Read Setting File ERROR","ERROR",JOptionPane.ERROR_MESSAGE);
+			System.exit(0);//遇到问题直接退出
 
 		}
 	}

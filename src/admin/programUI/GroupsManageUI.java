@@ -10,14 +10,17 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import admin.data.Data;
 import data.Groups;
 import data.User;
+import javafx.scene.image.Image;
 import admin.programUI.MainUI;
 
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Graphics;
 
-public class GroupsManageUI extends JFrame {
+public class GroupsManageUI extends JPanel {
 	private JTextField txt_name;
 	private JTextField txt_ID;
 	private JTextField txt_count;
@@ -27,15 +30,12 @@ public class GroupsManageUI extends JFrame {
 	private JButton btn_modify;
 
 	public GroupsManageUI() {
-		setTitle("\u7EC4\u7EC7\u7BA1\u7406-\u5FD7\u613F\u8005\u7BA1\u7406\u7CFB\u7EDF");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 556, 405);
-		setResizable(false);
-		getContentPane().setLayout(null);
+		setBounds(100, 100,720, 515);
+		setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(14, 13, 254, 344);
-		getContentPane().add(scrollPane);
+		scrollPane.setBounds(14, 13, 254, 489);
+		add(scrollPane);
 
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("×éÖ¯");
 
@@ -87,8 +87,8 @@ public class GroupsManageUI extends JFrame {
 		});
 
 		JPanel panel = new JPanel();
-		panel.setBounds(282, 13, 254, 344);
-		getContentPane().add(panel);
+		panel.setBounds(282, 26, 254, 476);
+		add(panel);
 		panel.setLayout(null);
 
 		JLabel label = new JLabel("\u7EC4\u7EC7\u540D\u79F0");
@@ -235,14 +235,15 @@ public class GroupsManageUI extends JFrame {
 		});
 		btn_modify.setBounds(115, 304, 113, 27);
 		panel.add(btn_modify);
-		setVisible(true);
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				new MainUI();
-				dispose();
-			}
-
-		});
+		
+		JPanel Jpic = new JPanel() {
+			public void paint(Graphics g) {
+			     g.drawImage(new ImageIcon("1.jpg").getImage(), 0,0,this);
+			   }
+		};
+		Jpic.setBounds(536, 13, 170, 489);
+		add(Jpic);
+		
 	}
 
 	public boolean infocheck(boolean checkall) {

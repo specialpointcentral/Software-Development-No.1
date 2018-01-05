@@ -13,12 +13,9 @@ import java.awt.Font;
 import java.util.Iterator;
 
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
 import java.awt.event.ActionEvent;
 
-public class InsertUI extends JFrame {
+public class InsertUI extends JPanel {
 	/**
 	 * 
 	 */
@@ -27,32 +24,23 @@ public class InsertUI extends JFrame {
 	private JTextArea txt_volDetail;
 
 	public InsertUI() {
-		// try {
-		// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 698, 550);
-		setTitle("\u6570\u636E\u6587\u4EF6\u6838\u5BF9-\u5FD7\u613F\u8005\u7BA1\u7406\u7CFB\u7EDF");
-		getContentPane().setLayout(null);
+		setLayout(null);
 
 		JLabel lab_groupName = new JLabel("{groupName}");
 		lab_groupName.setFont(new Font("宋体", Font.PLAIN, 16));
 		lab_groupName.setBounds(14, 13, 232, 25);
-		getContentPane().add(lab_groupName);
+		add(lab_groupName);
 		lab_groupName.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lab_groupCode = new JLabel("{groupCode}");
 		lab_groupCode.setFont(new Font("宋体", Font.PLAIN, 16));
 		lab_groupCode.setBounds(252, 13, 161, 25);
-		getContentPane().add(lab_groupCode);
+		add(lab_groupCode);
 		lab_groupCode.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(14, 51, 672, 395);
-		getContentPane().add(panel);
+		add(panel);
 		panel.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -71,7 +59,7 @@ public class InsertUI extends JFrame {
 		tree_volTree = new JTree(top);
 		new BuildTreeThread(tree_volTree, top);
 		scrollPane_1.setViewportView(tree_volTree);
-		
+
 		tree_volTree.addTreeSelectionListener(new TreeSelectionListener() {
 
 			@Override
@@ -142,10 +130,10 @@ public class InsertUI extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(14, 446, 672, 50);
-		getContentPane().add(panel_1);
+		add(panel_1);
 		panel_1.setLayout(null);
 
-		JButton btn_insertData = new JButton("\u5BFC\u5165\u6570\u636E");
+		JButton btn_insertData = new JButton("\u4ECE\u670D\u52A1\u5668\u83B7\u53D6\u6570\u636E");
 		btn_insertData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// get data from server
@@ -163,7 +151,7 @@ public class InsertUI extends JFrame {
 				jf.dispose();
 			}
 		});
-		btn_insertData.setBounds(14, 8, 135, 39);
+		btn_insertData.setBounds(14, 8, 153, 39);
 		panel_1.add(btn_insertData);
 
 		JButton btn_edit = new JButton("\u7F16\u8F91");
@@ -239,16 +227,6 @@ public class InsertUI extends JFrame {
 		lab_groupCode.setText("-");
 		lab_groupName.setText("-");
 
-		setResizable(false);// 不可放大
-		setVisible(true);
-
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				new MainUI();// 打开主界面
-				dispose();
-			}
-
-		});
 	}
 }
 

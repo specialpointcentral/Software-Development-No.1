@@ -83,7 +83,7 @@ public class MainUI extends JFrame {
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				new SaveUI();//保存作业
+				new SaveUI(1);//保存作业
 				dispose();
 			}
 
