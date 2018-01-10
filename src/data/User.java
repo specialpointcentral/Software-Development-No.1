@@ -1,8 +1,7 @@
 package data;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Iterator;
+
 
 public class User implements Serializable{//用户信息
 	String userName;//用户名

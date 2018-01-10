@@ -1,0 +1,12 @@
+admin.jar
+用户名：admin
+密码：admin
+
+user.jar
+组织：爱心超市
+用户名：axcs
+密码：axcs
+
+组织：明德践行会
+用户名：mdjxh
+密码：mdjxh

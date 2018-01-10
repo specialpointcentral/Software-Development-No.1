@@ -10,14 +10,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import admin.data.Data;
 import data.Groups;
 import data.User;
-import javafx.scene.image.Image;
-import admin.programUI.MainUI;
 
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class GroupsManageUI extends JPanel {

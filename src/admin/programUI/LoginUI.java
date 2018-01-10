@@ -6,21 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 
 import admin.data.Data;
 import data.User;
 import admin.programUI.MainUIPanel;
 import admin.process.ReadData;
-import java.awt.Dialog.ModalExclusionType;
-import java.awt.Window.Type;
 
 public class LoginUI extends JFrame implements ActionListener {
 	/**
