@@ -64,7 +64,7 @@ $RECYCLE.BIN/
 *.dat
 /.metadata/
 
-# Windows file
+# Windows files
 *.pdf
 *.doc
 *.docx
