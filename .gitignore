@@ -61,5 +61,12 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-group1.dat
+*.dat
 /.metadata/
+
+# Windows file
+*.pdf
+*.doc
+*.docx
+*.zip
+*.rar
